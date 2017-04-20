@@ -8,29 +8,36 @@ pulitzer <- read.csv("data/pulitzer-circulation-data.csv", stringsAsFactors = FA
 # Remeber you only need to install a package once
 #install.packages(dplyr)
 library(dplyr)
+library(stringr)
 
 # View in the data set. Start to understand what the data columns contains
 # Be sure to comment out the function so it won't view everytime you run the code.
-
+# View(pulitzer)
 
 # Use 'colnames' to print out the names of the columns
-
+print(colnames(pulitzer))
 
 # Use 'str' to print what types of values are contained in each column
 # Did any value type surprise you? Why do you think they are that type?
-
+pulitzer %>% str() %>% print()
 
 # Add a column in a dataframe called 'Pulitzer.Prize.Change` that contains the diffrence in changes
 # in Pulitzer Prize Winners from 2004 to 2013 and Pultizer Prize Winners from 1990 to 2003.
-
+pulitzer <- pulitzer %>% mutate(Pulitzer.Prize.Change = Pulitzer.Prize.Winners.and.Finalists..2004.2014 - Pulitzer.Prize.Winners.and.Finalists..1990.2003)
 
 # What publication gained the most pulitzer prizes from 2004-2014?
 # Be sure to use the pipe operator! 
-
+most.gained <- pulitzer %>%
+  filter(Pulitzer.Prize.Winners.and.Finalists..2004.2014 == max(Pulitzer.Prize.Winners.and.Finalists..2004.2014)) %>%
+  select(Newspaper)
 
 # Which publication with at least 5 Pulitzers won from 2004-2014 had the biggest decrease(negative) in Daily circulation numbers? 
 # This publication should have Pulitzer prizes won a minimum of 5 Pulitzers, as well as the biggest decrease in circulation
-
+biggest.decrease <- pulitzer %>%
+  filter(Pulitzer.Prize.Winners.and.Finalists..2004.2014 >= 5) %>%
+  filter(as.numeric(str_replace_all(Change.in.Daily.Circulation..2004.2013, "[+|%]", "")) == min(as.numeric(str_replace_all(Change.in.Daily.Circulation..2004.2013, "[+|%]", "")))) %>%
+  select(Newspaper)
+print(as.numeric(str_replace_all(pulitzer$Change.in.Daily.Circulation..2004.2013, "[+|%]", "")))
 
 # Your turn! An important part about being a data scientist is asking questions. 
 # Create a question and use dplyr to figure out the answer.  
