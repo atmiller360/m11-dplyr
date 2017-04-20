@@ -37,7 +37,7 @@ biggest.decrease <- pulitzer %>%
   filter(Pulitzer.Prize.Winners.and.Finalists..2004.2014 >= 5) %>%
   filter(as.numeric(str_replace_all(Change.in.Daily.Circulation..2004.2013, "[+|%]", "")) == min(as.numeric(str_replace_all(Change.in.Daily.Circulation..2004.2013, "[+|%]", "")))) %>%
   select(Newspaper)
-print(as.numeric(str_replace_all(pulitzer$Change.in.Daily.Circulation..2004.2013, "[+|%]", "")))
 
 # Your turn! An important part about being a data scientist is asking questions. 
-# Create a question and use dplyr to figure out the answer.  
+# Create a question and use dplyr to figure out the answer.
+# Which publication 
